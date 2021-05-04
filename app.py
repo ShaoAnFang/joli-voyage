@@ -8,7 +8,6 @@ import random
 import requests
 import datetime
 
-from firebase import firebase
 from bs4 import BeautifulSoup
 from imgurpython import ImgurClient
 from flask import Flask, request, abort
