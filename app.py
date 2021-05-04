@@ -18,8 +18,6 @@ from Controller.liff_controller import LiffController
 
 sendTime = time.time()
 
-firebase 
-
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -143,12 +141,6 @@ def handle_message(event):
         menulist += '2. 輸入 星座 天蠍\n\n'
         menulist += '3. 輸入 電影\n\n'
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=menulist))
-
-    if msg[0] == '查' and msg[1] == ' ':
-        string = msg.split('查 ')[1]   
-        fetchResult = firebaseFetch(string)
-        result = '關鍵字 ' + string + ' 結果為: \n' + fetchResult
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=result))
     
     if msg[0] == '星' and msg[1] == '座' and msg[2] == ' ':
         star = msg.split('星座 ')[1]
@@ -194,20 +186,6 @@ def handle_message(event):
         if random.randint(1, 2) != 1:
             flex_message = TemplateSend.chloeStyleTwo()
         line_bot_api.reply_message(event.reply_token, flex_message)
-        
-    #firebaseChatLog(msg)
-    profile = line_bot_api.get_profile(event.source.user_id)
-    if event.source.type =='user' :
-        #直接對機器人講
-        z = '單獨(user_id):' + event.source.user_id
-        firebaseChatLog(msg,profile.display_name,z)   
-        #firebaseChatLog(msg,'',z)
-        
-    elif event.source.type == 'group':
-        #群組裡講
-        z = '群組(group_id):' + event.source.group_id
-        firebaseChatLog(msg,profile.display_name,z)
-        #firebaseChatLog(msg,'',z)    
             
     if sticker(msg) != 'GG':
         if event.source.type !='group':
