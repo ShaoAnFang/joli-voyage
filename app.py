@@ -13,7 +13,7 @@ from imgurpython import ImgurClient
 from flask import Flask, request, abort
 from flask_restful import Api
 from oauth2client.service_account import ServiceAccountCredentials
-from Module import Aime, Constellation, Movies, GoogleSheet, TemplateSend, Sticker
+from Module import Aime, Constellation, Movies, TemplateSend, Sticker
 from Controller.liff_controller import LiffController
 
 sendTime = time.time()
@@ -89,13 +89,7 @@ def handsome():
     client = ImgurClient(client_id,client_secret)
     images = client.get_album_images('hjCtM')
     index = random.randint(0, len(images) - 1)
-    
     return images[index].link
-
-@app.route('/birthday/<string:date>', methods=['GET'])
-def birthday(date):
-    result = GoogleSheet.birthday(date)
-    return result
 
 # LocationMessage
 @handler.add(MessageEvent, message=LocationMessage)

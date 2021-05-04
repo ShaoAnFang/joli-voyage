@@ -3,13 +3,9 @@ from linebot.models import *
 import json
 import random
 import urllib
-import hashlib 
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-from firebase import firebase
-
-firebase = firebase.FirebaseApplication('https://python-f5763.firebaseio.com/',None)
 
 def moive(datas):
     contentResult = []
@@ -62,67 +58,6 @@ def moive(datas):
         }
     )
     return flex_message
-
-def sportsChannel():
-    channelList = firebase.get('/TVChannel','channelList')
-
-    carousel_template_message = TemplateSendMessage(
-    alt_text='TV Channel',
-    template=CarouselTemplate(
-        columns=[
-            CarouselColumn(
-                thumbnail_image_url="https://i.imgur.com/YvY2ttl.jpg",
-                title=channelList[0]["name"],
-                text =channelList[0]["name"],
-                #actions=[URITemplateAction(label='查看', uri=channelList[0]["url"])]
-                actions=[URITemplateAction(label='查看', uri="https://google.com")]
-            ),
-            CarouselColumn(
-                thumbnail_image_url="https://i.imgur.com/YvY2ttl.jpg",
-                title=channelList[1]["name"],
-                text= channelList[1]["name"],
-                #actions=[URITemplateAction(label='查看', uri=channelList[1]["url"])]
-                actions=[URITemplateAction(label='查看', uri="https://google.com")]
-            ),
-            CarouselColumn(
-                thumbnail_image_url="https://i.imgur.com/YvY2ttl.jpg",
-                title=channelList[2]["name"],
-                text= channelList[2]["name"],
-                #actions=[URITemplateAction(label='查看', uri=channelList[2]["url"])]
-                actions=[URITemplateAction(label='查看', uri="https://google.com")]
-            ),
-            CarouselColumn(
-                thumbnail_image_url="https://i.imgur.com/YvY2ttl.jpg",
-                title=channelList[3]["name"],
-                text= channelList[3]["name"],
-                #actions=[URITemplateAction(label='查看', uri=redir(channelList[3]["url"]))]
-                actions=[URITemplateAction(label='查看', uri="https://google.com")]
-            ),
-            CarouselColumn(
-                thumbnail_image_url="https://i.imgur.com/YvY2ttl.jpg",
-                title=channelList[4]["name"],
-                text= channelList[4]["name"],
-                #actions=[URITemplateAction(label='查看', uri=channelList[4]["url"])]
-                actions=[URITemplateAction(label='查看', uri="https://google.com")]
-            )
-        ]
-        )
-    )
-    return carousel_template_message
-
-def redir(urlString):
-    #print(int(datetime.now().timestamp()))
-    md = firebase.get('/TVChannel',"md")
-    nowTimestamp = int(datetime.now().timestamp())
-    token = md + str(nowTimestamp + 5)
-    result = hashlib.md5(token.encode())
-    tokenMD5 = result.hexdigest()
-    tokenString = "&st={}&token={}".format(str(nowTimestamp), tokenMD5)
-    urlString = urlString + tokenString
-    #print(urlString)
-    r = requests.get(urlString)
-    #print(r.url)
-    return r.url
 
 def aime(albumResult,textTitle):
     carousel_template_message = TemplateSendMessage(
