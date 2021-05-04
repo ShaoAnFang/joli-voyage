@@ -1,0 +1,9 @@
+flask
+flask-restful==0.3.7
+pytz
+gunicorn
+requests
+imgurpython
+beautifulsoup4
+line-bot-sdk
+oauth2client
